@@ -1,3 +1,7 @@
+use crate::wavefunction::Wavefunction;
+mod wavefunction;
+
 fn main() {
-    println!("Hello, world!");
+    let gaussian = crate::wavefunction::Gaussian::new(1, 2, 3);
+    dbg!(gaussian);
 }
