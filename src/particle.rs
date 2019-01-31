@@ -13,4 +13,8 @@ impl Particle {
             num_dimensions,
         }
     }
+
+    pub fn move_particle(&mut self, step: f64, dim: u8) {
+        self.position[dim as usize] += step;
+    }
 }
