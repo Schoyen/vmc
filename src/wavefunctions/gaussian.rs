@@ -1,10 +1,4 @@
-pub trait Wavefunction {
-    fn new(
-        num_particles: u32,
-        num_dimensions: u32,
-        num_parameters: u32,
-    ) -> Self; // Constructor for a Wavefunction
-}
+use crate::wavefunctions::wavefunction;
 
 #[derive(Debug)]
 pub struct Gaussian {
@@ -13,7 +7,7 @@ pub struct Gaussian {
     num_parameters: u32,
 }
 
-impl Wavefunction for Gaussian {
+impl wavefunction::Wavefunction for Gaussian {
     fn new(
         num_particles: u32,
         num_dimensions: u32,
