@@ -1,2 +1,6 @@
+# Rust build
 /target
 **/*.rs.bk
+
+# Vim swap
+*.swp
