@@ -4,22 +4,26 @@ mod sampler;
 mod system;
 mod wavefunctions;
 
-use hamiltonians::hamiltonian;
-use sampler::Sampler;
-use system::SystemContainer;
-use wavefunctions::gaussian::Gaussian;
-use wavefunctions::wavefunction::Wavefunction;
+use hamiltonians::HarmonicOscillator;
+use particle::Particle;
+use sampler::{Sampler, SamplingContainer};
+use system::System;
+use wavefunctions::Gaussian;
+use wavefunctions::Wavefunction;
 
 const HBAR: f64 = 1.0;
 
 fn main() {
+    let num_dimensions: usize = 1;
+    let num_particles: usize = 10;
+
     let gaussian = Gaussian::new(1, 2, 3, 2.5);
-    dbg!(gaussian);
 
-    let position: Vec<f64> = vec![1.0, 2.0, 3.0];
+    let particles = vec![Particle::new(num_dimensions); num_particles];
 
-    let particle = particle::Particle::new(position);
-    dbg!(particle);
+    let ho = HarmonicOscillator;
+    let sampler = SamplingContainer::new();
 
-    let ho = hamiltonians::harmonic_oscillator::HarmonicOscillator;
+    let system =
+        System::new(gaussian, ho, sampler, num_dimensions, num_particles);
 }

@@ -1,4 +1,4 @@
-use crate::wavefunctions::wavefunction::Wavefunction;
+use crate::wavefunctions::Wavefunction;
 
 pub trait Hamiltonian {
     fn compute_kinetic_energy<T>(&self, wavefunction: &T) -> f64

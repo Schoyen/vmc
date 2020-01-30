@@ -1,4 +1,4 @@
-use crate::wavefunctions::wavefunction;
+use super::Wavefunction;
 
 #[derive(Debug)]
 pub struct Gaussian {
@@ -8,7 +8,7 @@ pub struct Gaussian {
     mass: f64,
 }
 
-impl wavefunction::Wavefunction for Gaussian {
+impl Wavefunction for Gaussian {
     fn new(
         num_particles: u32,
         num_dimensions: u8,
@@ -24,6 +24,7 @@ impl wavefunction::Wavefunction for Gaussian {
     }
 
     fn compute_laplacian(&self) -> f64 {
+        println!("Hello!");
         2.5
     }
 

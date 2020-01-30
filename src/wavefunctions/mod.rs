@@ -1,2 +1,5 @@
-pub mod gaussian;
-pub mod wavefunction;
+mod gaussian;
+mod wavefunction;
+
+pub use gaussian::Gaussian;
+pub use wavefunction::Wavefunction;

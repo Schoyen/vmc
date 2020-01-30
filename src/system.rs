@@ -1,46 +1,34 @@
-use crate::hamiltonians::hamiltonian::Hamiltonian;
+use crate::hamiltonians::Hamiltonian;
 use crate::particle::Particle;
 use crate::sampler::Sampler;
-use crate::wavefunctions::wavefunction::Wavefunction;
+use crate::wavefunctions::Wavefunction;
 
-pub trait System<T, U, V>
-where
-    T: Wavefunction,
-    U: Hamiltonian,
-    V: Sampler,
-{
-    fn new(
-        wavefunction: T,
-        hamiltonian: U,
-        sampler: V,
-        num_particles: u32,
-    ) -> Self;
-}
-
-pub struct SystemContainer<T, U, V> {
+#[derive(Debug)]
+pub struct System<T, U, V> {
     wavefunction: T,
     hamiltonian: U,
     sampler: V,
     particles: Vec<Particle>,
 }
 
-impl<T, U, V> System<T, U, V> for SystemContainer<T, U, V>
+impl<T, U, V> System<T, U, V>
 where
     T: Wavefunction,
     U: Hamiltonian,
     V: Sampler,
 {
-    fn new(
+    pub fn new(
         wavefunction: T,
         hamiltonian: U,
         sampler: V,
-        num_particles: u32,
+        num_dimensions: usize,
+        num_particles: usize,
     ) -> Self {
-        SystemContainer {
+        System {
             wavefunction,
             hamiltonian,
             sampler,
-            particles: Vec::<Particle>::with_capacity(num_particles as usize),
+            particles: vec![Particle::new(num_dimensions); num_particles],
         }
     }
 }

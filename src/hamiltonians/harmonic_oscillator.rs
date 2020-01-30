@@ -1,5 +1,5 @@
-use crate::hamiltonian::Hamiltonian;
-use crate::wavefunctions::wavefunction::Wavefunction;
+use super::Hamiltonian;
+use crate::wavefunctions::Wavefunction;
 
 pub struct HarmonicOscillator;
 
