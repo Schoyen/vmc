@@ -4,31 +4,22 @@ use crate::sampler::Sampler;
 use crate::wavefunctions::Wavefunction;
 
 #[derive(Debug)]
-pub struct System<T, U, V> {
+pub struct System<T, U> {
     wavefunction: T,
     hamiltonian: U,
-    sampler: V,
-    particles: Vec<Particle>,
+    sampler: Sampler,
 }
 
-impl<T, U, V> System<T, U, V>
+impl<T, U> System<T, U>
 where
     T: Wavefunction,
     U: Hamiltonian,
-    V: Sampler,
 {
-    pub fn new(
-        wavefunction: T,
-        hamiltonian: U,
-        sampler: V,
-        num_dimensions: usize,
-        num_particles: usize,
-    ) -> Self {
+    pub fn new(wavefunction: T, hamiltonian: U, sampler: Sampler) -> Self {
         System {
             wavefunction,
             hamiltonian,
             sampler,
-            particles: vec![Particle::new(num_dimensions); num_particles],
         }
     }
 }

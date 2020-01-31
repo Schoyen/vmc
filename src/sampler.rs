@@ -1,13 +1,10 @@
-pub trait Sampler {
-    fn new() -> Self;
-}
-
-pub struct SamplingContainer {
+#[derive(Debug)]
+pub struct Sampler {
     foo: u32,
 }
 
-impl Sampler for SamplingContainer {
-    fn new() -> Self {
-        SamplingContainer { foo: 2 }
+impl Sampler {
+    pub fn new() -> Self {
+        Sampler { foo: 0 }
     }
 }

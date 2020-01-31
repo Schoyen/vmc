@@ -20,3 +20,26 @@ impl Particle {
         self.position[dim] += step;
     }
 }
+
+#[derive(Debug)]
+pub struct Particles {
+    num_dimensions: usize,
+    particles: Vec<Particle>,
+}
+
+impl Particles {
+    pub fn new(num_particles: usize, num_dimensions: usize) -> Self {
+        Particles {
+            num_dimensions,
+            particles: vec![Particle::new(num_dimensions); num_particles],
+        }
+    }
+
+    pub fn get_num_dimensions(&self) -> usize {
+        self.num_dimensions
+    }
+
+    pub fn get_num_particles(&self) -> usize {
+        self.particles.len()
+    }
+}
