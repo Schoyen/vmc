@@ -3,26 +3,31 @@ use crate::particle::{Particle, Particles};
 
 #[derive(Debug)]
 pub struct Gaussian {
-    particles: Particles,
-    num_parameters: usize,
-    mass: f64,
+    parameters: Vec<f64>,
+}
+
+impl Gaussian {
+    pub fn new(alpha: f64) -> Self {
+        Gaussian {
+            parameters: vec![alpha],
+        }
+    }
 }
 
 impl Wavefunction for Gaussian {
-    fn new(particles: Particles, num_parameters: usize, mass: f64) -> Self {
-        Gaussian {
-            particles,
-            num_parameters,
-            mass,
-        }
+    fn get_num_parameters(&self) -> usize {
+        self.parameters.len()
     }
 
-    fn compute_laplacian(&self) -> f64 {
-        println!("Hello!");
+    fn get_parameters(&self) -> &Vec<f64> {
+        &self.parameters
+    }
+
+    fn evaluate(&self, particles: &Particles) -> f64 {
+        1.0
+    }
+
+    fn compute_laplacian(&self, particles: &Particles) -> f64 {
         2.5
-    }
-
-    fn get_mass(&self) -> f64 {
-        self.mass
     }
 }

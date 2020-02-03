@@ -1,21 +1,26 @@
 use super::Hamiltonian;
+use crate::particle::Particles;
 use crate::wavefunctions::Wavefunction;
 
 pub struct HarmonicOscillator;
 
 impl Hamiltonian for HarmonicOscillator {
-    fn compute_kinetic_energy<T>(&self, wavefunction: &T) -> f64
+    fn compute_kinetic_energy<T>(
+        &self,
+        wavefunction: &T,
+        particles: &Particles,
+    ) -> f64
     where
         T: Wavefunction,
     {
-        let mut kinetic_energy = wavefunction.compute_laplacian();
-        kinetic_energy *=
-            -crate::HBAR.powi(2) / (2.0 * wavefunction.get_mass());
-
-        kinetic_energy
+        -0.5 * wavefunction.compute_laplacian(particles)
     }
 
-    fn compute_potential_energy<T>(&self, wavefunction: &T) -> f64
+    fn compute_potential_energy<T>(
+        &self,
+        wavefunction: &T,
+        particles: &Particles,
+    ) -> f64
     where
         T: Wavefunction,
     {

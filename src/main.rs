@@ -11,18 +11,18 @@ use system::System;
 use wavefunctions::Gaussian;
 use wavefunctions::Wavefunction;
 
-const HBAR: f64 = 1.0;
-
 fn main() {
-    let mass = 1.0;
+    let alpha = 0.4;
+    let step_length = 1.0;
     let num_parameters: usize = 1;
     let num_dimensions: usize = 1;
     let num_particles: usize = 10;
 
     let particles = Particles::new(num_particles, num_dimensions);
-    let gaussian = Gaussian::new(particles, num_parameters, mass);
+    let gaussian = Gaussian::new(alpha);
 
     let ho = HarmonicOscillator;
 
-    let system = System::new(gaussian, ho, Sampler::new());
+    let system =
+        System::new(gaussian, ho, particles, Sampler::new(), step_length);
 }

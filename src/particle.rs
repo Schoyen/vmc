@@ -42,4 +42,6 @@ impl Particles {
     pub fn get_num_particles(&self) -> usize {
         self.particles.len()
     }
+
+    pub fn distribute_particles(&mut self, spread: f64) {}
 }
