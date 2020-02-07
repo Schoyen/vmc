@@ -24,7 +24,14 @@ impl Wavefunction for Gaussian {
     }
 
     fn evaluate(&self, particles: &Particles) -> f64 {
-        1.0
+        // Fetch the variational parameter alpha
+        let alpha = &self.parameters[0];
+
+        // Get the squared sum of the positions
+        let pos_squared_sum = particles.compute_pos_squared_sum();
+
+        // Compute the wave function
+        (-alpha * pos_squared_sum).exp()
     }
 
     fn compute_laplacian(&self, particles: &Particles) -> f64 {
