@@ -1,3 +1,5 @@
+use rand::prelude::random;
+
 mod hamiltonians;
 mod particle;
 mod sampler;
@@ -18,7 +20,7 @@ fn main() {
     let num_parameters: usize = 1;
     let num_dimensions: usize = 1;
     let num_particles: usize = 10;
-    let num_metropolis_steps: usize = 10000;
+    let num_metropolis_steps: usize = 1_000_00;
 
     let particles = Particles::new(num_particles, num_dimensions);
     let gaussian = Gaussian::new(alpha);
@@ -28,5 +30,5 @@ fn main() {
     let mut system = System::new(gaussian, ho, particles, step_length);
     system.initialize_walkers(spread);
 
-    let sampler = system.run_metropolis_steps(num_metropolis_steps);
+    let sampler = system.run_metropolis_steps(num_metropolis_steps, true);
 }
