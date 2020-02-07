@@ -1,4 +1,7 @@
-use rand::{prelude::thread_rng, Rng};
+use rand::{
+    prelude::{random, thread_rng},
+    Rng,
+};
 
 #[derive(Debug, Clone)]
 pub struct Particle {
@@ -47,6 +50,24 @@ impl Particles {
         }
     }
 
+    pub fn get_particle_pos(&self, p_index: usize) -> Vec<f64> {
+        // TODO: Check if p_index can be given a fixed size
+        // TODO: Check if there are smarter copy methods for vecs
+
+        let mut pos_copy = vec![0.0; self.num_dimensions];
+        let pos = &self.particles[p_index].position;
+
+        for i in 0..pos.len() {
+            pos_copy[i] = pos[i];
+        }
+
+        pos_copy
+    }
+
+    pub fn set_particle_pos(&mut self, p_index: usize, pos: Vec<f64>) {
+        self.particles[p_index].set_position(pos);
+    }
+
     pub fn get_num_dimensions(&self) -> usize {
         self.num_dimensions
     }
@@ -74,5 +95,27 @@ impl Particles {
         }
 
         squared_sum
+    }
+
+    pub fn propose_move(
+        &mut self,
+        p_index: usize,
+        step_length: f64,
+        all_dims: bool,
+    ) {
+        let mut rng = thread_rng();
+
+        let particle = &mut self.particles[p_index];
+
+        if all_dims {
+            for pos in &mut particle.position {
+                *pos += step_length * rng.gen_range(-1.0, 1.0);
+            }
+        } else {
+            let d_index = random::<usize>() % self.num_dimensions;
+            let pos = &mut particle.position[d_index];
+
+            *pos += step_length * rng.gen_range(-1.0, 1.0);
+        }
     }
 }

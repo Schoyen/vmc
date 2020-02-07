@@ -1,4 +1,4 @@
-use rand::{prelude::thread_rng, Rng};
+use rand::prelude::random;
 
 use crate::hamiltonians::Hamiltonian;
 use crate::particle::{Particle, Particles};
@@ -36,20 +36,42 @@ where
         self.particles.distribute_particles(spread);
     }
 
-    pub fn run_metropolis_steps(&self, num_steps: usize) -> Sampler {
+    pub fn run_metropolis_steps(
+        &mut self,
+        num_steps: usize,
+        all_dims: bool,
+    ) -> Sampler {
         let sampler = Sampler::new(num_steps);
 
         sampler.sample(&self, true);
 
         for step in 0..num_steps {
-            sampler.sample(&self, self.run_metropolis_step());
+            let accepted_step = self.run_metropolis_step(all_dims);
+
+            sampler.sample(&self, accepted_step);
         }
 
         sampler
     }
 
-    fn run_metropolis_step(&self) -> bool {
+    fn run_metropolis_step(&mut self, all_dims: bool) -> bool {
         let old_wfn = self.wavefunction.evaluate(&self.particles);
-        true
+
+        let p_index = random::<usize>() % self.particles.get_num_particles();
+        let pos_copy = self.particles.get_particle_pos(p_index);
+
+        self.particles
+            .propose_move(p_index, self.step_length, all_dims);
+
+        let new_wfn = self.wavefunction.evaluate(&self.particles);
+        let ratio = new_wfn * new_wfn / (old_wfn * old_wfn);
+
+        if ratio >= random::<f64>() {
+            return true;
+        }
+
+        self.particles.set_particle_pos(p_index, pos_copy);
+
+        false
     }
 }
