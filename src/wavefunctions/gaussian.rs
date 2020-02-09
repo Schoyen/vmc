@@ -1,5 +1,5 @@
 use super::Wavefunction;
-use crate::particle::{Particle, Particles};
+use crate::particle::Particles;
 
 #[derive(Debug)]
 pub struct Gaussian {
@@ -35,6 +35,16 @@ impl Wavefunction for Gaussian {
     }
 
     fn compute_laplacian(&self, particles: &Particles) -> f64 {
-        2.5
+        // Fetch the variational parameter alpha
+        let alpha = &self.parameters[0];
+
+        // Compute the position squared sum
+        let pos_squared_sum = particles.compute_pos_squared_sum();
+
+        // Compute the Laplacian
+        -2.0 * (particles.get_num_dimensions() as f64)
+            * (particles.get_num_particles() as f64)
+            * alpha
+            + 4.0 * alpha * alpha * pos_squared_sum
     }
 }
