@@ -10,7 +10,9 @@ use system::System;
 use wavefunctions::Gaussian;
 
 fn main() {
-    let alpha = 0.4;
+    let alpha = 1.1;
+    let mass = 1.0;
+    let omega = 2.0;
     let step_length = 1.0;
     let spread = 2.0;
     let num_dimensions: usize = 1;
@@ -20,10 +22,11 @@ fn main() {
     let particles = Particles::new(num_particles, num_dimensions);
     let gaussian = Gaussian::new(alpha);
 
-    let ho = HarmonicOscillator;
+    let ho = HarmonicOscillator::new(mass, omega);
 
     let mut system = System::new(gaussian, ho, particles, step_length);
     system.initialize_walkers(spread);
 
     let sampler = system.run_metropolis_steps(num_metropolis_steps, true);
+    sampler.output_statistics();
 }
