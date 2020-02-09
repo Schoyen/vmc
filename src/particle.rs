@@ -108,14 +108,14 @@ impl Particles {
         let particle = &mut self.particles[p_index];
 
         if all_dims {
-            for pos in &mut particle.position {
-                *pos += step_length * rng.gen_range(-1.0, 1.0);
+            for dim in 0..self.num_dimensions {
+                let step = step_length * rng.gen_range(-1.0, 1.0);
+                particle.adjust_position(step, dim);
             }
         } else {
-            let d_index = random::<usize>() % self.num_dimensions;
-            let pos = &mut particle.position[d_index];
-
-            *pos += step_length * rng.gen_range(-1.0, 1.0);
+            let dim = random::<usize>() % self.num_dimensions;
+            let step = step_length * rng.gen_range(-1.0, 1.0);
+            particle.adjust_position(step, dim);
         }
     }
 }
