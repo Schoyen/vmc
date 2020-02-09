@@ -1,7 +1,7 @@
 use rand::prelude::random;
 
 use crate::hamiltonians::Hamiltonian;
-use crate::particle::{Particle, Particles};
+use crate::particle::Particles;
 use crate::sampler::Sampler;
 use crate::wavefunctions::Wavefunction;
 
