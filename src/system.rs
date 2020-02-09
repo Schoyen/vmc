@@ -46,15 +46,17 @@ where
         num_steps: usize,
         all_dims: bool,
     ) -> Sampler {
-        let sampler = Sampler::new(num_steps);
+        let mut sampler = Sampler::new(num_steps);
 
-        sampler.sample(&self, true);
+        sampler.sample(&self, 0, true);
 
-        for step in 0..num_steps {
+        for step in 1..num_steps {
             let accepted_step = self.run_metropolis_step(all_dims);
 
-            sampler.sample(&self, accepted_step);
+            sampler.sample(&self, step, accepted_step);
         }
+
+        sampler.compute_expectation_values();
 
         sampler
     }
