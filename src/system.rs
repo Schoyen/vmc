@@ -36,6 +36,11 @@ where
         self.particles.distribute_particles(spread);
     }
 
+    pub fn compute_local_energy(&self) -> f64 {
+        self.hamiltonian
+            .compute_local_energy(&self.wavefunction, &self.particles)
+    }
+
     pub fn run_metropolis_steps(
         &mut self,
         num_steps: usize,
