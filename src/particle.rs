@@ -26,13 +26,7 @@ impl Particle {
     }
 
     pub fn compute_pos_squared(&self) -> f64 {
-        let mut pos_squared = 0.0;
-
-        for pos in &self.position {
-            pos_squared += pos * pos;
-        }
-
-        pos_squared
+        self.position.iter().map(|x| x * x).sum()
     }
 }
 
