@@ -45,7 +45,6 @@ impl Particles {
     }
 
     pub fn get_particle_pos(&self, p_index: usize) -> Vec<f64> {
-        // TODO: Check if p_index can be given a fixed size
         self.particles[p_index].position.to_vec()
     }
 
