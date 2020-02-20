@@ -52,16 +52,7 @@ impl Particles {
 
     pub fn get_particle_pos(&self, p_index: usize) -> Vec<f64> {
         // TODO: Check if p_index can be given a fixed size
-        // TODO: Check if there are smarter copy methods for vecs
-
-        let mut pos_copy = vec![0.0; self.num_dimensions];
-        let pos = &self.particles[p_index].position;
-
-        for i in 0..pos.len() {
-            pos_copy[i] = pos[i];
-        }
-
-        pos_copy
+        self.particles[p_index].position.to_vec()
     }
 
     pub fn set_particle_pos(&mut self, p_index: usize, pos: Vec<f64>) {
