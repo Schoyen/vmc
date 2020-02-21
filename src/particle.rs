@@ -72,13 +72,7 @@ impl Particles {
     }
 
     pub fn compute_pos_squared_sum(&self) -> f64 {
-        let mut squared_sum = 0.0;
-
-        for particle in &self.particles {
-            squared_sum += particle.compute_pos_squared();
-        }
-
-        squared_sum
+        self.particles.iter().map(|x| x.compute_pos_squared()).sum()
     }
 
     pub fn propose_move(
