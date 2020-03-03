@@ -34,13 +34,19 @@ impl Particle {
 pub struct Particles {
     num_dimensions: usize,
     particles: Vec<Particle>,
+    all_dims: bool,
 }
 
 impl Particles {
-    pub fn new(num_particles: usize, num_dimensions: usize) -> Self {
+    pub fn new(
+        num_particles: usize,
+        num_dimensions: usize,
+        all_dims: bool,
+    ) -> Self {
         Particles {
             num_dimensions,
             particles: vec![Particle::new(num_dimensions); num_particles],
+            all_dims,
         }
     }
 
@@ -75,17 +81,12 @@ impl Particles {
         self.particles.iter().map(|x| x.compute_pos_squared()).sum()
     }
 
-    pub fn propose_move(
-        &mut self,
-        p_index: usize,
-        step_length: f64,
-        all_dims: bool,
-    ) {
+    pub fn propose_move(&mut self, p_index: usize, step_length: f64) {
         let mut rng = thread_rng();
 
         let particle = &mut self.particles[p_index];
 
-        if all_dims {
+        if self.all_dims {
             for dim in 0..self.num_dimensions {
                 let step = step_length * rng.gen_range(-1.0, 1.0);
                 particle.adjust_position(step, dim);

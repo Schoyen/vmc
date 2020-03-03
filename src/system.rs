@@ -1,8 +1,7 @@
-use rand::prelude::random;
-
 use crate::hamiltonians::Hamiltonian;
 use crate::particle::Particles;
 use crate::sampler::Sampler;
+use crate::solvers::MonteCarloMethod;
 use crate::wavefunctions::Wavefunction;
 
 #[derive(Debug)]
@@ -41,17 +40,24 @@ where
             .compute_local_energy(&self.wavefunction, &self.particles)
     }
 
-    pub fn run_metropolis_steps(
+    pub fn run_metropolis_steps<S>(
         &mut self,
+        solver: &S,
         num_steps: usize,
-        all_dims: bool,
-    ) -> Sampler {
+    ) -> Sampler
+    where
+        S: MonteCarloMethod,
+    {
         let mut sampler = Sampler::new(num_steps);
 
         sampler.sample(&self, 0, true);
 
         for step in 1..num_steps {
-            let accepted_step = self.run_metropolis_step(all_dims);
+            let accepted_step = solver.step(
+                &self.wavefunction,
+                &mut self.particles,
+                self.step_length,
+            );
 
             sampler.sample(&self, step, accepted_step);
         }
@@ -59,26 +65,5 @@ where
         sampler.compute_expectation_values();
 
         sampler
-    }
-
-    fn run_metropolis_step(&mut self, all_dims: bool) -> bool {
-        let old_wfn = self.wavefunction.evaluate(&self.particles);
-
-        let p_index = random::<usize>() % self.particles.get_num_particles();
-        let pos_copy = self.particles.get_particle_pos(p_index);
-
-        self.particles
-            .propose_move(p_index, self.step_length, all_dims);
-
-        let new_wfn = self.wavefunction.evaluate(&self.particles);
-        let ratio = new_wfn * new_wfn / (old_wfn * old_wfn);
-
-        if ratio >= random::<f64>() {
-            return true;
-        }
-
-        self.particles.set_particle_pos(p_index, pos_copy);
-
-        false
     }
 }
