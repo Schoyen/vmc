@@ -10,6 +10,7 @@ pub struct Sampler {
     energy: f64,
     energy_squared: f64,
     energy_var: f64,
+    acceptance_ratio: f64,
 }
 
 impl Sampler {
@@ -21,6 +22,7 @@ impl Sampler {
             energy: 0.0,
             energy_squared: 0.0,
             energy_var: 0.0,
+            acceptance_ratio: 0.0,
         }
     }
 
@@ -48,6 +50,8 @@ impl Sampler {
         self.energy_squared /= num_steps;
         self.energy_var = self.energy_squared - self.energy * self.energy;
         self.energy_var /= num_steps;
+        self.acceptance_ratio =
+            (self.num_accepted_steps as f64) / (num_steps as f64);
     }
 
     pub fn output_statistics(&self) {
@@ -55,5 +59,6 @@ impl Sampler {
         println!("Energy squared: {}", self.energy_squared);
         println!("Energy variance: {}", self.energy_var);
         println!("Energy standard deviation: {}", self.energy_var.sqrt());
+        println!("Acceptance ratio: {}", self.acceptance_ratio);
     }
 }
