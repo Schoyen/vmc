@@ -1,5 +1,5 @@
 use super::Wavefunction;
-use crate::particle::Particles;
+use crate::particle::{Particle, Particles};
 
 #[derive(Debug)]
 pub struct Gaussian {
@@ -32,6 +32,13 @@ impl Wavefunction for Gaussian {
 
         // Compute the wave function
         (-alpha * pos_squared_sum).exp()
+    }
+
+    fn compute_gradient_of_particle(&self, particle: &Particle) -> Vec<f64> {
+        let alpha = &self.parameters[0];
+        let position = particle.get_position();
+
+        position.iter().map(|x| -2.0 * alpha * x).collect()
     }
 
     fn compute_laplacian(&self, particles: &Particles) -> f64 {

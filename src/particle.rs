@@ -28,6 +28,10 @@ impl Particle {
     pub fn compute_pos_squared(&self) -> f64 {
         self.position.iter().map(|x| x * x).sum()
     }
+
+    pub fn get_position(&self) -> &Vec<f64> {
+        &self.position
+    }
 }
 
 #[derive(Debug)]
