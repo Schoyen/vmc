@@ -1,7 +1,4 @@
-use rand::{
-    prelude::{random, thread_rng},
-    Rng,
-};
+use rand::{prelude::thread_rng, Rng};
 
 #[derive(Debug, Clone)]
 pub struct Particle {
@@ -48,8 +45,16 @@ impl Particles {
         }
     }
 
-    pub fn get_particle_pos(&self, p_index: usize) -> Vec<f64> {
+    pub fn get_particle(&self, p_index: usize) -> &Particle {
+        &self.particles[p_index]
+    }
+
+    pub fn get_particle_pos_copy(&self, p_index: usize) -> Vec<f64> {
         self.particles[p_index].position.to_vec()
+    }
+
+    pub fn get_particle_pos(&self, p_index: usize) -> &Vec<f64> {
+        &self.particles[p_index].position
     }
 
     pub fn set_particle_pos(&mut self, p_index: usize, pos: Vec<f64>) {
@@ -79,20 +84,7 @@ impl Particles {
         self.particles.iter().map(|x| x.compute_pos_squared()).sum()
     }
 
-    pub fn propose_move(&mut self, p_index: usize, step_length: f64) {
-        let mut rng = thread_rng();
-
-        let particle = &mut self.particles[p_index];
-
-        if self.all_dims {
-            for dim in 0..self.num_dimensions {
-                let step = step_length * rng.gen_range(-1.0, 1.0);
-                particle.adjust_position(step, dim);
-            }
-        } else {
-            let dim = random::<usize>() % self.num_dimensions;
-            let step = step_length * rng.gen_range(-1.0, 1.0);
-            particle.adjust_position(step, dim);
-        }
+    pub fn move_particle(&mut self, step: f64, p_index: usize, dim: usize) {
+        self.particles[p_index].adjust_position(step, dim);
     }
 }
