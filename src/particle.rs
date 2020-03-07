@@ -38,19 +38,13 @@ impl Particle {
 pub struct Particles {
     num_dimensions: usize,
     particles: Vec<Particle>,
-    all_dims: bool,
 }
 
 impl Particles {
-    pub fn new(
-        num_particles: usize,
-        num_dimensions: usize,
-        all_dims: bool,
-    ) -> Self {
+    pub fn new(num_particles: usize, num_dimensions: usize) -> Self {
         Particles {
             num_dimensions,
             particles: vec![Particle::new(num_dimensions); num_particles],
-            all_dims,
         }
     }
 

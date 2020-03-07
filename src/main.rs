@@ -21,7 +21,7 @@ fn main() {
     let num_particles: usize = 10;
     let num_metropolis_steps: usize = 1_000_00;
 
-    let particles = Particles::new(num_particles, num_dimensions, true);
+    let particles = Particles::new(num_particles, num_dimensions);
     let gaussian = Gaussian::new(alpha);
 
     let ho = HarmonicOscillator::new(mass, omega);
