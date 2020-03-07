@@ -7,4 +7,11 @@ pub trait Wavefunction {
     fn evaluate(&self, particles: &Particles) -> f64;
     fn compute_gradient_of_particle(&self, particle: &Particle) -> Vec<f64>;
     fn compute_laplacian(&self, particles: &Particles) -> f64;
+
+    fn compute_drift_force(&self, particle: &Particle) -> Vec<f64> {
+        self.compute_gradient_of_particle(particle)
+            .iter()
+            .map(|x| x * 2.0)
+            .collect()
+    }
 }
