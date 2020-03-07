@@ -13,7 +13,7 @@ pub struct ImportanceSampling {
 }
 
 impl ImportanceSampling {
-    fn new(diffusion_coefficient: f64) -> Self {
+    pub fn new(diffusion_coefficient: f64) -> Self {
         ImportanceSampling {
             diffusion_coefficient,
         }
