@@ -48,7 +48,11 @@ where
     where
         S: MonteCarloMethod,
     {
-        let mut sampler = Sampler::new(num_steps);
+        let mut sampler = Sampler::new(
+            num_steps,
+            self.particles.get_num_particles(),
+            self.particles.get_num_dimensions(),
+        );
 
         sampler.sample(&self, 0, true);
 

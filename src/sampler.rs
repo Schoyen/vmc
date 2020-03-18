@@ -6,6 +6,8 @@ use crate::wavefunctions::Wavefunction;
 pub struct Sampler {
     num_metropolis_steps: usize,
     num_accepted_steps: usize,
+    num_particles: usize,
+    num_dimensions: usize,
     local_energies: Vec<f64>,
     energy: f64,
     energy_squared: f64,
@@ -14,10 +16,16 @@ pub struct Sampler {
 }
 
 impl Sampler {
-    pub fn new(num_metropolis_steps: usize) -> Self {
+    pub fn new(
+        num_metropolis_steps: usize,
+        num_particles: usize,
+        num_dimensions: usize,
+    ) -> Self {
         Sampler {
             num_metropolis_steps,
             num_accepted_steps: 0,
+            num_particles,
+            num_dimensions,
             local_energies: vec![0.0; num_metropolis_steps],
             energy: 0.0,
             energy_squared: 0.0,
@@ -56,6 +64,10 @@ impl Sampler {
 
     pub fn output_statistics(&self) {
         println!("Energy: {}", self.energy);
+        println!(
+            "Energy per particle per dimension: {}",
+            self.energy / ((self.num_particles * self.num_dimensions) as f64)
+        );
         println!("Energy squared: {}", self.energy_squared);
         println!("Energy variance: {}", self.energy_var);
         println!("Energy standard deviation: {}", self.energy_var.sqrt());
