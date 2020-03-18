@@ -12,14 +12,14 @@ use system::System;
 use wavefunctions::Gaussian;
 
 fn main() {
-    let alpha = 1.1;
+    let alpha = 0.3;
     let mass = 1.0;
-    let omega = 2.0;
+    let omega = 1.0;
     let step_length = 1.0;
     let spread = 2.0;
     let num_dimensions: usize = 1;
-    let num_particles: usize = 10;
-    let num_metropolis_steps: usize = 1_000_00;
+    let num_particles: usize = 2;
+    let num_metropolis_steps: usize = 1_000_000;
 
     let imp_step_length = 0.1;
     let diffusion_coefficient = 0.5;
