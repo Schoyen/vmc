@@ -65,8 +65,8 @@ impl Sampler {
     pub fn output_statistics(&self) {
         println!("Energy: {}", self.energy);
         println!(
-            "Energy per particle per dimension: {}",
-            self.energy / ((self.num_particles * self.num_dimensions) as f64)
+            "Energy per particle: {}",
+            self.energy / (self.num_particles as f64)
         );
         println!("Energy squared: {}", self.energy_squared);
         println!("Energy variance: {}", self.energy_var);

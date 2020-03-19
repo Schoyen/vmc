@@ -25,10 +25,6 @@ impl Particle {
     pub fn compute_pos_squared(&self) -> f64 {
         self.position.iter().map(|x| x * x).sum()
     }
-
-    pub fn get_position(&self) -> &Vec<f64> {
-        &self.position
-    }
 }
 
 #[derive(Debug)]
@@ -45,16 +41,27 @@ impl Particles {
         }
     }
 
-    pub fn get_particle(&self, p_index: usize) -> &Particle {
-        &self.particles[p_index]
-    }
-
     pub fn get_particle_pos_copy(&self, p_index: usize) -> Vec<f64> {
         self.particles[p_index].position.to_vec()
     }
 
     pub fn get_particle_pos(&self, p_index: usize) -> &Vec<f64> {
         &self.particles[p_index].position
+    }
+
+    pub fn get_distance_between_particles(
+        &self,
+        p_i: usize,
+        p_j: usize,
+    ) -> f64 {
+        let pos_i = &self.particles[p_i].position;
+        let pos_j = &self.particles[p_j].position;
+
+        pos_i
+            .iter()
+            .zip(pos_j.iter())
+            .map(|(x, y)| (x - y).powi(2))
+            .sum()
     }
 
     pub fn set_particle_pos(&mut self, p_index: usize, pos: Vec<f64>) {

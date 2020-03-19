@@ -40,7 +40,7 @@ impl MonteCarloMethod for ImportanceSampling {
 
         // Compute the drift force for particle p_index
         let drift_force_old =
-            wavefunction.compute_drift_force(particles.get_particle(p_index));
+            wavefunction.compute_drift_force(p_index, particles);
 
         let mut rng = thread_rng();
         // Propose a new step and move the particle
@@ -60,7 +60,7 @@ impl MonteCarloMethod for ImportanceSampling {
 
         // Compute the new drift force for particle p_index
         let drift_force_new =
-            wavefunction.compute_drift_force(particles.get_particle(p_index));
+            wavefunction.compute_drift_force(p_index, particles);
 
         // Initialize vector accumulators
         let mut first_vector = 0.0;
