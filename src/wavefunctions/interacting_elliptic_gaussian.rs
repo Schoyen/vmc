@@ -132,6 +132,7 @@ impl InteractingEllipticGaussian {
 
     fn compute_cw_laplacian(&self, p_i: usize, particles: &Particles) -> f64 {
         let mut laplacian = 0.0;
+        let num_dimensions = particles.get_num_dimensions() as f64;
 
         for p_j in 0..particles.get_num_particles() {
             if p_i == p_j {
@@ -140,11 +141,10 @@ impl InteractingEllipticGaussian {
 
             let dist = particles.get_distance_between_particles(p_i, p_j);
 
-            laplacian += ((particles.get_num_dimensions() as f64) - 1.0)
-                * self.a
-                / (dist.powi(2) * (dist - self.a))
-                + (dist.powi(2) - 2.0 * self.a * dist)
-                    / (dist.powi(2) * (dist - self.a).powi(2));
+            laplacian += (num_dimensions - 1.0) * self.a
+                / (dist.powi(2) * (dist - self.a));
+            laplacian += (self.a.powi(2) - 2.0 * self.a * dist)
+                / (dist.powi(2) * (dist - self.a).powi(2));
         }
 
         laplacian
