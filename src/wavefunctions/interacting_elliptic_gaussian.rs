@@ -63,9 +63,9 @@ impl InteractingEllipticGaussian {
         let gradient_spf = self.compute_spf_gradient(p_i, particles);
         let gradient_cw = self.compute_cw_gradient(p_i, particles);
 
-        for i in 0..particles.get_num_dimensions() {
-            laplacian +=
-                2.0 * gradient_spf[i] * gradient_cw[i] + gradient_cw[i].powi(2);
+        for k in 0..particles.get_num_dimensions() {
+            laplacian += 2.0 * gradient_spf[k] * gradient_cw[k];
+            laplacian += gradient_cw[k].powi(2);
         }
 
         laplacian += self.compute_cw_laplacian(p_i, particles);
@@ -77,10 +77,12 @@ impl InteractingEllipticGaussian {
         let alpha = self.parameters[0];
         let pos_i = particles.get_particle_pos(p_i);
         let pos_sq_sum = self.compute_pos_squared(pos_i);
-        let num_dims = pos_i.len();
+        let num_dims = pos_i.len() as f64;
 
-        -2.0 * alpha * ((num_dims as f64) - 1.0 + self.beta)
-            + 4.0 * alpha.powi(2) * pos_sq_sum
+        let mut laplacian = -2.0 * alpha * (num_dims - 1.0 + self.beta);
+        laplacian += 4.0 * alpha.powi(2) * pos_sq_sum;
+
+        laplacian
     }
 
     fn compute_spf_gradient(
