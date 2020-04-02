@@ -95,11 +95,11 @@ impl InteractingEllipticGaussian {
         let mut grad = vec![0.0; pos_i.len()];
 
         for i in 0..(pos_i.len() - 1) {
-            grad[i] += -2.0 * alpha * pos_i[i].powi(2);
+            grad[i] += -2.0 * alpha * pos_i[i];
         }
 
         grad[pos_i.len() - 1] +=
-            -2.0 * alpha * self.beta * pos_i[pos_i.len() - 1].powi(2);
+            -2.0 * alpha * self.beta * pos_i[pos_i.len() - 1];
 
         grad
     }
