@@ -17,7 +17,7 @@ fn main() {
     let step_length = 1.0;
     let spread = 2.0;
     let num_dimensions: usize = 3;
-    let num_particles: usize = 10;
+    let num_particles: usize = 2;
     let num_metropolis_steps: usize = 1_000_00;
 
     // Run initial system
@@ -61,10 +61,7 @@ fn main() {
         sampler.output_statistics(&system);
     }
 
-    let num_particles: usize = 10;
-    let num_dimensions: usize = 3;
     let a = 0.0043;
-    let omega = 1.0;
     let lambda = (8.0 as f64).sqrt();
     let beta = lambda;
 
