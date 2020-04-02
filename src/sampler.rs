@@ -62,7 +62,16 @@ impl Sampler {
             (self.num_accepted_steps as f64) / (num_steps as f64);
     }
 
-    pub fn output_statistics(&self) {
+    pub fn output_statistics<T, U>(&self, system: &System<T, U>)
+    where
+        T: Wavefunction,
+        U: Hamiltonian,
+    {
+        println!("-------------------------------------------------");
+        println!("{:?}", system.get_wavefunction().get_parameters());
+        println!("Number of particles: {}", self.num_particles);
+        println!("Number of dimensions: {}", self.num_dimensions);
+        println!("Number of steps: {}", self.num_metropolis_steps);
         println!("Energy: {}", self.energy);
         println!(
             "Energy per particle: {}",
