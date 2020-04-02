@@ -17,9 +17,13 @@ impl InteractingEllipticGaussian {
     }
 
     fn compute_pos_squared(&self, pos: &Vec<f64>) -> f64 {
-        let mut pos_sq_sum: f64 =
-            pos[0..pos.len() - 1].iter().map(|x| x.powi(2)).sum();
-        pos_sq_sum += pos[pos.len() - 1].powi(2) * self.beta;
+        let mut pos_sq_sum = 0.0;
+
+        for i in 0..pos.len() - 1 {
+            pos_sq_sum += pos[i].powi(2);
+        }
+
+        pos_sq_sum += (pos[pos.len() - 1] * self.beta).powi(2);
 
         pos_sq_sum
     }
