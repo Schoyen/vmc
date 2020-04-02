@@ -121,8 +121,8 @@ impl InteractingEllipticGaussian {
             let pos_j = particles.get_particle_pos(p_j);
             let dist = particles.get_distance_between_particles(p_i, p_j);
 
-            for i in 0..pos_i.len() {
-                gradient[i] += (pos_i[i] - pos_j[i]) * self.a
+            for k in 0..pos_i.len() {
+                gradient[k] += (pos_i[k] - pos_j[k]) * self.a
                     / (dist.powi(2) * (dist - self.a));
             }
         }
