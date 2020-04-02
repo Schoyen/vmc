@@ -70,4 +70,8 @@ where
 
         sampler
     }
+
+    pub fn get_wavefunction(&self) -> &T {
+        &self.wavefunction
+    }
 }
