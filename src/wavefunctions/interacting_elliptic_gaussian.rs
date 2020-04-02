@@ -28,8 +28,13 @@ impl InteractingEllipticGaussian {
         pos_sq_sum
     }
 
-    fn evaluate_single_particle_function(&self, position: &Vec<f64>) -> f64 {
+    fn evaluate_single_particle_function(
+        &self,
+        p_i: usize,
+        particles: &Particles,
+    ) -> f64 {
         let alpha = self.parameters[0];
+        let position = particles.get_particle_pos(p_i);
 
         (-alpha * self.compute_pos_squared(position)).exp()
     }
@@ -157,9 +162,7 @@ impl Wavefunction for InteractingEllipticGaussian {
         let mut product = 1.0;
 
         for p_i in 0..particles.get_num_particles() {
-            product *= self.evaluate_single_particle_function(
-                particles.get_particle_pos(p_i),
-            );
+            product *= self.evaluate_single_particle_function(p_i, particles);
             for p_j in (p_i + 1)..particles.get_num_particles() {
                 product *=
                     self.evaluate_correlation_wavefunction(p_i, p_j, particles);
