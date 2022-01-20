@@ -16,27 +16,22 @@ impl InteractingEllipticGaussian {
         }
     }
 
-    fn compute_pos_squared(&self, pos: &Vec<f64>) -> f64 {
-        let mut pos_sq_sum = 0.0;
-
-        for i in 0..pos.len() - 1 {
-            pos_sq_sum += pos[i].powi(2);
-        }
-
-        pos_sq_sum += (pos[pos.len() - 1] * self.beta).powi(2);
-
-        pos_sq_sum
-    }
-
     fn evaluate_single_particle_function(
         &self,
         p_i: usize,
         particles: &Particles,
     ) -> f64 {
         let alpha = self.parameters[0];
-        let position = particles.get_particle_pos(p_i);
+        let pos = particles.get_particle_pos(p_i);
 
-        (-alpha * self.compute_pos_squared(position)).exp()
+        let mut pos_sq_sum = 0.0;
+        for i in 0..pos.len() - 1 {
+            pos_sq_sum += pos[i].powi(2);
+        }
+
+        pos_sq_sum += (pos[pos.len() - 1]).powi(2) * self.beta;
+
+        (-alpha * pos_sq_sum).exp()
     }
 
     fn evaluate_correlation_wavefunction(
@@ -75,9 +70,16 @@ impl InteractingEllipticGaussian {
 
     fn compute_spf_laplacian(&self, p_i: usize, particles: &Particles) -> f64 {
         let alpha = self.parameters[0];
-        let pos_i = particles.get_particle_pos(p_i);
-        let pos_sq_sum = self.compute_pos_squared(pos_i);
-        let num_dims = pos_i.len() as f64;
+        let pos = particles.get_particle_pos(p_i);
+
+        let mut pos_sq_sum = 0.0;
+        for i in 0..pos.len() - 1 {
+            pos_sq_sum += pos[i].powi(2);
+        }
+
+        pos_sq_sum += (pos[pos.len() - 1] * self.beta).powi(2);
+
+        let num_dims = pos.len() as f64;
 
         let mut laplacian = -2.0 * alpha * (num_dims - 1.0 + self.beta);
         laplacian += 4.0 * alpha.powi(2) * pos_sq_sum;
