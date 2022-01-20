@@ -7,3 +7,4 @@ edition = "2018"
 [dependencies]
 rand = "*"
 rand_distr = "*"
+approx = "*"
