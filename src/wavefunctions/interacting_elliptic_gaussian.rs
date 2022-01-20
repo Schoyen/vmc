@@ -202,3 +202,23 @@ impl Wavefunction for InteractingEllipticGaussian {
             .collect()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use approx::assert_abs_diff_eq;
+    use rand::Rng;
+
+    #[test]
+    fn test_compute_pos_squared() {
+        let mut rng = rand::thread_rng();
+        let alpha = rng.gen::<f64>();
+        let beta = (8.0 * rng.gen::<f64>()).sqrt();
+        let a = rng.gen::<f64>() * 0.1;
+
+        let ieg = InteractingEllipticGaussian::new(alpha, beta, a);
+        let pos = vec![1.0, 1.0, 1.0];
+
+        // assert_abs_diff_eq!(ieg.compute_pos_squared(&pos), 2.0 + beta);
+    }
+}
