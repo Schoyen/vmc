@@ -83,7 +83,7 @@ impl Particles {
         for particle in &mut self.particles {
             let mut position = vec![0.0; self.num_dimensions];
             for i in 0..self.num_dimensions {
-                position[i] += spread * rng.gen_range(-1.0, 1.0);
+                position[i] += spread * rng.gen_range(-1.0..1.0);
             }
 
             particle.set_position(position);
