@@ -22,6 +22,9 @@ fn main() {
 
     // Run initial system
     println!(
+        "=================================================================="
+    );
+    println!(
         "Starting alpha loop for non-interacting system using Metropolis..."
     );
     for alpha in vec![0.2, 0.3, 0.4, 0.5, 0.6, 0.7] {
@@ -42,6 +45,9 @@ fn main() {
     let imp_step_length = 0.1;
     let diffusion_coefficient = 0.5;
 
+    println!(
+        "=================================================================="
+    );
     println!(
         "Starting alpha loop for non-interacting system using Importance..."
     );
@@ -68,6 +74,9 @@ fn main() {
     let imp_step_length = 0.1;
     let diffusion_coefficient = 0.5;
 
+    println!(
+        "=================================================================="
+    );
     println!("Starting alpha loop for interacting system...");
     for alpha in vec![0.2, 0.3, 0.4, 0.5, 0.6, 0.7] {
         // Run interacting system with importance sampling
