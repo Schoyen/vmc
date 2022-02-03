@@ -42,7 +42,7 @@ impl Hamiltonian for EllipticHarmonicOscillator {
                 pos_sq_sum += pos[j].powi(2);
             }
 
-            pos_sq_sum += pos[pos.len() - 1].powi(2) * self.lambda;
+            pos_sq_sum += (pos[pos.len() - 1] * self.lambda).powi(2);
         }
 
         self.omega * pos_sq_sum / 2.0
