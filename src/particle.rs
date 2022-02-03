@@ -60,7 +60,7 @@ impl Particles {
         pos_i
             .iter()
             .zip(pos_j.iter())
-            .map(|(x, y)| (x - y).powi(2))
+            .map(|(x, y)| (x - y).powi(2).sqrt())
             .sum()
     }
 
