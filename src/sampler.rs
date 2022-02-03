@@ -68,7 +68,10 @@ impl Sampler {
         U: Hamiltonian,
     {
         println!("-------------------------------------------------");
-        println!("{:?}", system.get_wavefunction().get_parameters());
+        println!(
+            "Parameters: {:?}",
+            system.get_wavefunction().get_parameters()
+        );
         println!("Number of particles: {}", self.num_particles);
         println!("Number of dimensions: {}", self.num_dimensions);
         println!("Number of steps: {}", self.num_metropolis_steps);
