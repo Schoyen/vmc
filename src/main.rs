@@ -93,8 +93,23 @@ fn main() {
             .run_metropolis_steps(&MetropolisAlgorithm, num_metropolis_steps);
         sampler.output_statistics(&system);
 
+        println!("\nInteracting system using the Importance sampling");
+        let mut system = System::new(
+            InteractingEllipticGaussian::new(alpha, beta, a),
+            EllipticHarmonicOscillator::new(lambda, omega),
+            Particles::new(num_particles, num_dimensions),
+            imp_step_length,
+        );
+        system.initialize_walkers(spread);
+
+        let sampler = system.run_metropolis_steps(
+            &ImportanceSampling::new(diffusion_coefficient),
+            num_metropolis_steps,
+        );
+        sampler.output_statistics(&system);
+
         println!(
-            "=================================================================="
+            "\n==================================================================\n"
         );
     }
 }
