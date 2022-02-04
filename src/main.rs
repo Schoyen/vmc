@@ -26,7 +26,7 @@ fn energy_spherical_osc_variational(
 fn main() {
     let mass = 1.0;
     let omega = 1.0;
-    let step_length = 1.0;
+    let step_length = 0.5;
     let spread = 2.0;
     let num_dimensions: usize = 3;
     let num_particles: usize = 10;
