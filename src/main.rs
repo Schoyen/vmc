@@ -29,7 +29,7 @@ fn main() {
     let step_length = 0.5;
     let spread = 2.0;
     let num_dimensions: usize = 3;
-    let num_particles: usize = 10;
+    let num_particles: usize = 50;
     let num_metropolis_steps: usize = 1_000_00;
 
     let imp_step_length = 0.1;
