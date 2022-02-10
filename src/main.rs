@@ -29,8 +29,8 @@ fn main() {
     let step_length = 0.5;
     let spread = 2.0;
     let num_dimensions: usize = 3;
-    let num_particles: usize = 50;
-    let num_metropolis_steps: usize = 1_000_00;
+    let num_particles: usize = 10;
+    let num_metropolis_steps: usize = 1_000_000;
 
     let imp_step_length = 0.1;
     let diffusion_coefficient = 0.5;
@@ -39,7 +39,7 @@ fn main() {
     let lambda = (8.0 as f64).sqrt();
     let beta = lambda;
 
-    for alpha in vec![0.2, 0.3, 0.4, 0.5, 0.6, 0.7] {
+    for alpha in vec![0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8] {
         println!("Exact energy for non-interacting, spherical system");
         println!("Alpha: {}", alpha);
         let energy = energy_spherical_osc_variational(
